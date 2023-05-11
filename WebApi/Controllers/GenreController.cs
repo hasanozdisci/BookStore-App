@@ -2,7 +2,6 @@
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using WebApi.Application.BookOperations.Commands.CreateBook;
 using WebApi.Application.GenreOperations.Commands.CreateGenre;
 using WebApi.Application.GenreOperations.Commands.DeleteGenre;
 using WebApi.Application.GenreOperations.Commands.UpdateGenre;
@@ -16,9 +15,9 @@ namespace WebApi.Controllers
     [ApiController]
     public class GenreController : ControllerBase
     {
-        private readonly BookStoreDbContext _context;
+        private readonly IBookStoreDbContext _context;
         private readonly IMapper _mapper;
-        public GenreController(BookStoreDbContext context, IMapper mapper)
+        public GenreController(IBookStoreDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
@@ -33,7 +32,8 @@ namespace WebApi.Controllers
         [HttpGet("{id}")]
         public IActionResult GenreDetail(int id)
         {
-            GetGenreDetailQuery query = new(_mapper, _context);
+            GetGenreDetailQuery query = new(_mapper,
+                _context);
             query.GenreId = id;
             GetGenreDetailQueryValidator validator = new();
             validator.ValidateAndThrow(query);
@@ -71,7 +71,7 @@ namespace WebApi.Controllers
             command.Handle();
             return Ok();
         }
-        
+
     }
 }
 

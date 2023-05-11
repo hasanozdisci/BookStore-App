@@ -38,6 +38,7 @@ namespace WebApi
             });
             // add db context to services
             services.AddDbContext<BookStoreDbContext>(options => options.UseInMemoryDatabase(databaseName: "BookStoreDB"));
+            services.AddScoped<IBookStoreDbContext>(provider => provider.GetService<BookStoreDbContext>());
             // add auto mapper to services
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             //DI Container - Dependency Injection
