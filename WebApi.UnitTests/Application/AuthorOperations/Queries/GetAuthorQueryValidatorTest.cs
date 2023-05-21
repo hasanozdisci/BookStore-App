@@ -4,25 +4,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WebApi.Application.BookOperations.Queries.GetBookDetail;
+using WebApi.Application.AuthorOperations.Queries.GetAuthorDetail;
+using WebApi.Application.AuthorOperations.Queries.GetAuthors;
 using WebApi.UnitTests.TestSetup;
 using Xunit;
 
-namespace WebApi.UnitTests.Application.BookOperations.Queries.GetBookDetail
+namespace WebApi.UnitTests.Application.AuthorOperations.Queries
 {
-    public class GetBookDetailValidatorTest : IClassFixture<CommanTextFixture>
+    public class GetAuthorQueryValidatorTest : IClassFixture<CommanTextFixture>
     {
         [Theory]
         [InlineData(-1)]
         [InlineData(0)]
         [InlineData(null)]
-        public void WhenInvalidInputIsGiven_Validator_ShouldBeReturnErrors(int bookId)
+        public void WhenInvalidInputIsGiven_Validator_ShouldBeReturnErrors(int authorId)
         {
             // arrange
-            GetBookDetailQuery query = new(null, null);
-            query.BookId = bookId;
+            GetAuthorDetailQuery query = new(null, null);
+            query.AuthorId = authorId;
             //act
-            GetBookQueryValidator validator = new();
+            GetAuthorDetailQueryValidator validator = new();
             var result = validator.Validate(query);
             //assert
             result.Errors.Count.Should().BeGreaterThan(0);
@@ -30,11 +31,10 @@ namespace WebApi.UnitTests.Application.BookOperations.Queries.GetBookDetail
         [Fact]
         public void WhenValidInputIsGiven_Validator_ShouldNotBeReturnErrors()
         {
-            // arrange
-            GetBookDetailQuery query = new(null, null);
-            query.BookId = 1;
+            GetAuthorDetailQuery query = new(null, null);
+            query.AuthorId = 1;
             //act
-            GetBookQueryValidator validator = new();
+            GetAuthorDetailQueryValidator validator = new();
             var result = validator.Validate(query);
             //assert
             result.Errors.Count.Should().Equals(0);

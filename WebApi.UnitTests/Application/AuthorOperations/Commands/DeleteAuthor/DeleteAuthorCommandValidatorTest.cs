@@ -4,25 +4,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WebApi.Application.BookOperations.Commands.DeleteBook;
+using WebApi.Application.AuthorOperations.Commands.DeleteAuthor;
 using WebApi.UnitTests.TestSetup;
 using Xunit;
 
-namespace WebApi.UnitTests.Application.BookOperations.Commands.DeleteBook
+namespace WebApi.UnitTests.Application.AuthorOperations.Commands.DeleteAuthor
 {
-    public class DeleteBookCommandValidatorTest : IClassFixture<CommanTextFixture>
+    public class DeleteAuthorCommandValidatorTest : IClassFixture<CommanTextFixture>
     {
         [Theory]
         [InlineData(-1)]
         [InlineData(0)]
         [InlineData(null)]
-        public void WhenInvalidInputIsGiven_Validator_ShouldBeReturnErrors(int bookId)
+        public void WhenInvalidInputIsGiven_Validator_ShouldBeReturnErrors(int authorId)
         {
             // arrange
-            DeleteBookCommand command = new(null);
-            command.BookId = bookId;
+            DeleteAuthorCommand command = new(null);
+            command.AuthorId = authorId;
             //act
-            DeleteBookCommandValidator validator = new();
+            DeleteAuthorCommandValidator validator = new();
             var result = validator.Validate(command);
             //assert
             result.Errors.Count.Should().BeGreaterThan(0);
@@ -31,10 +31,10 @@ namespace WebApi.UnitTests.Application.BookOperations.Commands.DeleteBook
         public void WhenValidInputIsGiven_Validator_ShouldNotBeReturnErrors()
         {
             // arrange
-            DeleteBookCommand command = new(null);
-            command.BookId = 1;
+            DeleteAuthorCommand command = new(null);
+            command.AuthorId = 1;
             //act
-            DeleteBookCommandValidator validator = new();
+            DeleteAuthorCommandValidator validator = new();
             var result = validator.Validate(command);
             //assert
             result.Errors.Count.Should().Equals(0);

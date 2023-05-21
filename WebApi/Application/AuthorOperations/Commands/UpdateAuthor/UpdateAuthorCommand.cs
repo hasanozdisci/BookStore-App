@@ -20,6 +20,7 @@ namespace WebApi.Application.AuthorOperations.Commands.UpdateAuthor
                 throw new InvalidOperationException("Güncellenecek yazar bulunamadı");
             author.Name = Model.Name != default ? Model.Name : author.Name;
             author.Surname = Model.Surname != default ? Model.Surname : author.Surname;
+            author.DateOfBirth = Model.DateOfBirth != default ? Model.DateOfBirth : author.DateOfBirth;
             _context.SaveChanges();
         }
     }
